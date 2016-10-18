@@ -1,0 +1,67 @@
+create table company(
+ company_id varchar(25) not null PRIMARY KEY,
+ company_name varchar(50) not null,
+ company_address varchar(50) not null,
+ type varchar(50) not null	
+);
+
+create table membership(
+ member_id varchar(50) not null PRIMARY KEY,
+ member_pwd varchar(50) not null,
+ member_name varchar(50) not null,
+ member_birth datetime not null,	
+ member_address varchar(50) not null,
+ member_companyid varchar(25) not null,
+ member_registerdate datetime not null,
+ foreign key(member_companyid) references company(company_id)	
+);
+
+create table market(
+ product_id varchar(50) not null PRIMARY KEY,
+ product_name varchar(50) not null,
+ unit_price int not null,
+ sale_company varchar(25) not null,
+ foreign key(sale_company) references company(company_id)		
+);
+
+
+create table demand(
+ demand_id varchar(50) not null PRIMARY KEY,
+ product_id varchar(50) not null,
+ amount int not null,
+ demand_company varchar(25) not null,
+ demand_date date not null,
+ foreign key( product_id) references market(product_id),	
+ foreign key( demand_company) references company(company_id)	
+);
+
+create table delivery(
+ delivery_id varchar(50) not null PRIMARY KEY,
+ product_id varchar(50) not null,
+ amount int not null,
+ receive_company varchar(25) not null,
+ delivery_date date not null,
+ foreign key(product_id) references market(product_id),	
+ foreign key(receive_company) references company(company_id)	
+);
+
+
+create table inventory(
+ inventory_id varchar(50) not null PRIMARY KEY,
+ product_id varchar(50) not null,
+ amount int not null,
+ inventory_company varchar(25) not null,
+ foreign key(product_id) references market(product_id),	
+ foreign key(inventory_company) references company(company_id)	
+);
+
+create table back(
+ back_id varchar(50) not null PRIMARY KEY,
+ product_id varchar(50) not null,
+ amount int not null,
+ back_company varchar(25) not null,
+ back_date date not null,
+ foreign key(product_id) references market(product_id),	
+ foreign key(back_company) references company(company_id)	
+);
+
